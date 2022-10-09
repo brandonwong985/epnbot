@@ -1,8 +1,10 @@
 import tweepy
 import config
 from sympy import *
+import random
 
 PRIME_FILE = "prime.txt"
+punct = ["...", "?", "?!", "!", "~", "?..", "!!"]
 
 auth = tweepy.OAuthHandler(config.api_key, config.api_key_secret)
 auth.set_access_token(config.access_token, config.access_token_secret)
@@ -34,9 +36,12 @@ def get_next_prime():
     write_last_prime(PRIME_FILE, next_prime)
     return next_prime
 
+def tweet_prime_number():
+    prime = get_next_prime()
+    api.update_status(str(prime) + random.choice(punct))
 
 def main():
-    get_next_prime()
+    tweet_prime_number()
 
 if __name__ == '__main__':
     main()

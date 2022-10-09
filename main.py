@@ -9,7 +9,7 @@ PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
 TWEET_TIMESTAMP = '45'
 MY_TIMEZONE = "America/Los_Angeles"
-punct = ["...", "?", "?!", "!", "~", "?..", "!!"]
+punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 
 def read_last_prime(FILE_NAME):
     file = open(FILE_NAME, 'r')

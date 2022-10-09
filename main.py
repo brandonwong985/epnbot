@@ -6,7 +6,11 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import datetime
 
 PRIME_FILE = "prime.txt"
+DEBUG_FILE = "debug.txt"
+TWEET_TIMESTAMP = '0'
+MY_TIMEZONE = "America/Los_Angeles"
 punct = ["...", "?", "?!", "!", "~", "?..", "!!"]
+
 
 auth = tweepy.OAuthHandler(config.api_key, config.api_key_secret)
 auth.set_access_token(config.access_token, config.access_token_secret)
@@ -17,8 +21,6 @@ try:
     print("Authentication OK")
 except:
     print("Error during authentication")
-
-#api.update_status("updating status using tweepy!")
 
 def read_last_prime(FILE_NAME):
     file = open(FILE_NAME, 'r')
@@ -35,19 +37,29 @@ def write_last_prime(FILE_NAME, last_prime):
 def get_next_prime():
     last_prime = read_last_prime(PRIME_FILE)
     next_prime = nextprime(int(last_prime))
-    write_last_prime(PRIME_FILE, next_prime)
     return next_prime
 
 def tweet_prime_number():
     prime = get_next_prime()
     tweet = str(prime) + random.choice(punct)   
     t = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    api.update_status(tweet)
-    print("tweeted " + tweet + " at " + t)        
+    try:
+        api.update_status(tweet)
+        print("tweeted " + tweet + " at " + t)  
+        write_last_prime(PRIME_FILE, prime)  
+    except:
+        tweet_failed(DEBUG_FILE, prime, t)
+
+def tweet_failed(FILE_NAME, failed_prime, t):
+    file = open(FILE_NAME, 'a')
+    file.write("tweet " + str(failed_prime) + " failed at " + str(t))
+    file.close()
+    return
+
 
 def main():
-    sched = BlockingScheduler(timezone="America/Los_Angeles")
-    sched.add_job(tweet_prime_number, 'cron', minute='0')
+    sched = BlockingScheduler(timezone=MY_TIMEZONE)
+    sched.add_job(tweet_prime_number, 'cron', minute=TWEET_TIMESTAMP)
     sched.start()
 
 if __name__ == '__main__':

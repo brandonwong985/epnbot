@@ -2,6 +2,8 @@ import tweepy
 import config
 from sympy import *
 import random
+from apscheduler.schedulers.blocking import BlockingScheduler
+import datetime
 
 PRIME_FILE = "prime.txt"
 punct = ["...", "?", "?!", "!", "~", "?..", "!!"]
@@ -38,10 +40,15 @@ def get_next_prime():
 
 def tweet_prime_number():
     prime = get_next_prime()
-    api.update_status(str(prime) + random.choice(punct))
+    tweet = str(prime) + random.choice(punct)   
+    t = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    api.update_status(tweet)
+    print("tweeted " + tweet + " at " + t)        
 
 def main():
-    tweet_prime_number()
+    sched = BlockingScheduler(timezone="America/Los_Angeles")
+    sched.add_job(tweet_prime_number, 'cron', minute='0')
+    sched.start()
 
 if __name__ == '__main__':
     main()

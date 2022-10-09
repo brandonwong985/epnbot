@@ -3,11 +3,11 @@ import config
 from sympy import *
 import random
 from apscheduler.schedulers.blocking import BlockingScheduler
-import datetime
+from datetime import datetime
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '0'
+TWEET_TIMESTAMP = '45'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["...", "?", "?!", "!", "~", "?..", "!!"]
 
@@ -31,7 +31,7 @@ def get_next_prime():
 def tweet_prime_number():
     prime = get_next_prime()
     tweet = str(prime) + random.choice(punct)   
-    t = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+    t = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     try:
         api.update_status(tweet)
         print("tweeted " + tweet + " at " + t)  
@@ -54,7 +54,7 @@ try:
     api.verify_credentials()
     print("Authentication OK")
 except:
-    msg = "Error during authentication at " + str(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+    msg = "Error during authentication at " + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     log_debug(DEBUG_FILE, msg)
 
 def main():

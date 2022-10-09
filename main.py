@@ -42,7 +42,7 @@ def tweet_prime_number():
 
 def log_debug(FILE_NAME, msg):
     file = open(FILE_NAME, 'a')
-    file.write(msg)
+    file.write('\n' + msg)
     file.close()
     return
 

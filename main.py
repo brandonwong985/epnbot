@@ -8,7 +8,7 @@ from git import Repo
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '0'
+TWEET_TIMESTAMP = '51'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 
@@ -59,7 +59,7 @@ def git_push():
         #git commit
         repo.index.commit("automated git push at " + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
         #git push
-        repo = Repo(repo = Repo(config.local_repo_path))
+        repo = Repo(config.local_repo_path)
         origin = repo.remote(name="origin")
         origin.push()
     except:

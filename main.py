@@ -8,7 +8,7 @@ from git import Repo
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '56'
+TWEET_TIMESTAMP = '27'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 
@@ -49,10 +49,7 @@ def log_debug(FILE_NAME, msg):
     return
 
 def git_push():
-    try:  
-        remote = f"https://{config.git_username}:{config.git_access_token}@github.com/{config.git_username}/{config.git_repo_name}.git"
-        #git clone
-        Repo.clone_from(remote, config.local_repo_path)            
+    try:             
         # git add
         repo = Repo(config.local_repo_path)
         repo.git.add(update=True)

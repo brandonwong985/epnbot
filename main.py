@@ -8,7 +8,7 @@ from git import Repo
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '31'
+TWEET_TIMESTAMP = '0'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 

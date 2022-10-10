@@ -8,7 +8,7 @@ from git import Repo
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '27'
+TWEET_TIMESTAMP = '31'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 
@@ -58,6 +58,7 @@ def git_push():
         #git push
         origin = repo.remote(name="origin")
         origin.push()
+        print("git push successful")
     except:
         msg = "Error during git push at " + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
         log_debug(DEBUG_FILE, msg)

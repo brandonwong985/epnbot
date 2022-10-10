@@ -7,19 +7,19 @@ from datetime import datetime
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '3'
+TWEET_TIMESTAMP = '13'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 
 def read_last_prime(FILE_NAME):
     file = open(FILE_NAME, 'r')
-    last_prime = int(str(file.readlines()[-1]))
+    last_prime = int(str(file.read().strip()))
     file.close()
     return last_prime
 
 def write_last_prime(FILE_NAME, last_prime):
-    file = open(FILE_NAME, 'a')
-    file.write('\n' + str(last_prime))
+    file = open(FILE_NAME, 'w')
+    file.write(str(last_prime))
     file.close()
     return
 

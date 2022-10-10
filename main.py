@@ -4,10 +4,11 @@ from sympy import *
 import random
 from apscheduler.schedulers.blocking import BlockingScheduler
 from datetime import datetime
+from git import Repo
 
 PRIME_FILE = "prime.txt"
 DEBUG_FILE = "debug.txt"
-TWEET_TIMESTAMP = '13'
+TWEET_TIMESTAMP = '34'
 MY_TIMEZONE = "America/Los_Angeles"
 punct = ["", "...", "?", "?!", "!", "~", "?..", "!!"]
 
@@ -39,12 +40,24 @@ def tweet_prime_number():
     except:
         msg = "tweet " + str(prime) + " failed at " + str(t)
         log_debug(DEBUG_FILE, msg)
+    git_push()
 
 def log_debug(FILE_NAME, msg):
     file = open(FILE_NAME, 'a')
     file.write('\n' + msg)
     file.close()
     return
+
+def git_push():
+    try:
+        repo = Repo(config.local_repo_path)
+        repo.git.add(update=True)
+        repo.index.commit("automated git push at " + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
+        origin = repo.remote(name="origin")
+        origin.push()
+    except:
+        msg = "Error during git push at " + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+        log_debug(DEBUG_FILE, msg)
 
 auth = tweepy.OAuthHandler(config.api_key, config.api_key_secret)
 auth.set_access_token(config.access_token, config.access_token_secret)

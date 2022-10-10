@@ -50,8 +50,11 @@ def log_debug(FILE_NAME, msg):
 
 def git_push():
     try:  
-        repo = Repo(config.local_repo_path)     
+        remote = f"https://{config.git_username}:{config.git_access_token}@github.com/{config.git_username}/{config.git_repo_name}.git"
+        #git clone
+        Repo.clone_from(remote, config.local_repo_path)            
         # git add
+        repo = Repo(config.local_repo_path)
         repo.git.add(update=True)
         #git commit
         repo.index.commit("automated git push at " + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
